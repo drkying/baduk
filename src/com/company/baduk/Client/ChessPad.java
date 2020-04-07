@@ -143,8 +143,6 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
             int x = e.getX();
             int y = e.getY();
             addPoint(x, y);
-        } else if (e.getModifiersEx() == InputEvent.BUTTON3_DOWN_MASK) {
-            restoreBorder();
         }
     }
 
