@@ -11,6 +11,7 @@ public class Point extends Canvas implements MouseListener, Serializable {
     private Player player = Player.NONE;
     private Type type = Type.C;
     private int x, y;
+    private int worth;
     private boolean wasLastPut = false;
 
     public enum Type {

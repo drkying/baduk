@@ -2,16 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e45357d7-81b1-48a1-b20f-656c1f1f2df9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/Tool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Begin$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Begin$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Begin.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Begin.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/ChessPad.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/ChessPad.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Point.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Client/Begin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Client/Begin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Client/ChessPad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Client/ChessPad.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Client/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Client/Point.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/Tool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/Tool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/UpdateMessages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/UpdateMessages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Server/GameSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Server/GameSocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Server/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Server/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Server/RoomManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Server/RoomManager.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -85,9 +90,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Begin" />
+      <item itemvalue="Application.Main" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Begin" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -108,8 +118,16 @@
       <workItem from="1585810178404" duration="1679000" />
       <workItem from="1585812156841" duration="1819000" />
       <workItem from="1586140918125" duration="2650000" />
-      <workItem from="1586227951696" duration="4075000" />
+      <workItem from="1586227951696" duration="15249000" />
     </task>
+    <task id="LOCAL-00001" summary="界面绘制完成，下一步、网络请求">
+      <created>1586232165094</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1586232165094</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,7 +146,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="change point" />
-    <option name="LAST_COMMIT_MESSAGE" value="change point" />
+    <MESSAGE value="界面绘制完成，下一步、网络请求" />
+    <option name="LAST_COMMIT_MESSAGE" value="界面绘制完成，下一步、网络请求" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

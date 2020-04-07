@@ -1,5 +1,7 @@
 package com.company.baduk.Server;
 
+import com.company.baduk.Client.Point;
+
 import java.net.Socket;
 import java.util.List;
 
@@ -8,7 +10,18 @@ public class Room {
     private Socket blackPlayer;
     private int roomName;
     private boolean isConnected=false;
+    private List<Point[][]> chessHistory;
 
+    @Override
+    public String toString() {
+        return "Room{" +
+                "whitePlayer=" + whitePlayer +
+                ", blackPlayer=" + blackPlayer +
+                ", roomName=" + roomName +
+                ", isConnected=" + isConnected +
+                ", chessHistory=" + chessHistory +
+                '}';
+    }
 
     public boolean isConnected() {
         return isConnected;
@@ -26,9 +39,13 @@ public class Room {
         this.roomName = roomName;
     }
 
-    private List<String> chessHistory;
-    public Room(){
 
+    public Room(){
+    }
+
+    public Room(Socket blackPlayer, int roomName) {
+        this.blackPlayer = blackPlayer;
+        this.roomName = roomName;
     }
 
     public Socket getWhitePlayer() {
@@ -45,13 +62,5 @@ public class Room {
 
     public void setBlackPlayer(Socket blackPlayer) {
         this.blackPlayer = blackPlayer;
-    }
-
-    public List<String> getChessHistory() {
-        return chessHistory;
-    }
-
-    public void setChessHistory(List<String> chessHistory) {
-        this.chessHistory = chessHistory;
     }
 }

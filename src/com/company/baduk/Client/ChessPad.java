@@ -85,9 +85,9 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
                 this.add(now[i][j]);
                 now[i][j].setBounds(now[i][j].getX() * 20 - 10, now[i][j].getY() * 20 - 10, 20, 20);
             }
-        if (nowPlayer == Player.BLACK)
-            nowPlayer = Player.WHITE;
-        else nowPlayer = Player.BLACK;
+//        if (nowPlayer == Player.BLACK)
+////            nowPlayer = Player.WHITE;
+////        else nowPlayer = Player.BLACK;
     }
 
     public void addPoint(int x, int y) {
@@ -106,15 +106,22 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
             if (nowPlayer == Player.WHITE) {
                 this.add(point);
                 point.setBounds(a * 20 - 10, b * 20 - 10, 20, 20);
-                nowPlayer = Player.BLACK;
+                //nowPlayer = Player.BLACK;
             } else if (nowPlayer == Player.BLACK) {
                 this.add(point);
                 point.setBounds(a * 20 - 10, b * 20 - 10, 20, 20);
-                nowPlayer = Player.WHITE;
+                //nowPlayer = Player.WHITE;
             }
             points.push(point);
             now[a][b] = point;
+            Begin.write(point);
         }
+    }
+
+    public void addPoint(Point point) {
+        backupBorder();
+        this.add(point);
+        now[point.getX()][point.getY()] = point;
     }
 
     public boolean isDead(Point[][] points, int x, int y) {
@@ -143,6 +150,8 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
             int x = e.getX();
             int y = e.getY();
             addPoint(x, y);
+            Point temp = (Point) Begin.read();
+            addPoint(temp);
         }
     }
 

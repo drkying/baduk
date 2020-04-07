@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.*;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class Begin extends JFrame {
     ChessPad chesspad = new ChessPad();
@@ -15,19 +18,72 @@ public class Begin extends JFrame {
     JButton pass = new JButton("跳过");
     JButton give_up = new JButton("认输");
     JButton undo = new JButton("悔棋");
+    static Socket s;
+    static InputStream inputStream;
+    static OutputStream outputStream;
+    static ObjectInputStream objectInputStream;
+    static ObjectOutputStream objectOutputStream;
+
 
     public Begin() {
         init();
-//        String ip = JOptionPane.showInputDialog("请输入服务器ip:");
-//        if (ip == null) System.exit(0);
-//        if (Tool.ipCheck(ip)) {
-//            String roomName = JOptionPane.showInputDialog("请输入房间号:");
-//            start();
+        // String ip = JOptionPane.showInputDialog("请输入服务器ip:");
+        // if (ip == null) System.exit(0);
+        //if (Tool.ipCheck(ip)) {
+        //  String roomName = JOptionPane.showInputDialog("请输入房间号:");
+        //  request(roomName);
+        request("1");
+        System.out.println(4);
+        start();
+
 //        } else {
 //            JOptionPane.showMessageDialog(null, "输入的ip不合法");
 //            System.exit(0);
 //        }
-        start();
+    }
+
+    public void request(String roomName) {
+        int x = Tool.encode(roomName);
+        try {
+            initStream();
+            outputStream.write(x);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("request finish");
+    }
+
+    private void initStream() throws IOException {
+        s = new Socket("127.0.0.1", 8000);
+        outputStream = s.getOutputStream();
+        inputStream = s.getInputStream();
+    }
+
+    public static void write(Object point) {
+        try {
+            if (objectOutputStream == null) objectOutputStream = new ObjectOutputStream(outputStream);
+
+            objectOutputStream.writeObject(point);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Object read() {
+        Object point = null;
+        try {
+            if (objectInputStream == null) objectInputStream = new ObjectInputStream(inputStream);
+            if ((point = objectInputStream.readObject()) != (null)) {
+                return point;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return point;
     }
 
     public void init() {

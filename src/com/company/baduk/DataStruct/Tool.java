@@ -19,4 +19,12 @@ public class Tool {
         }
         return false;
     }
+
+    public static int encode(String roomName) {
+        int s = 0;
+        for (int i = 0; i < roomName.length(); i++) {
+            s += (int) roomName.charAt(i);
+        }
+        return s;
+    }
 }
