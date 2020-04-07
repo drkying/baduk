@@ -5,10 +5,11 @@ import com.company.baduk.DataStruct.Player;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.Serializable;
 
-public class Point extends Canvas implements MouseListener {
+public class Point extends Canvas implements MouseListener, Serializable {
     private Player player = Player.NONE;
-    private Type type;
+    private Type type = Type.C;
     private int x, y;
     private boolean wasLastPut = false;
 

@@ -11,7 +11,8 @@ import java.util.LinkedList;
 public class ChessPad extends JPanel implements MouseListener, ActionListener {
     private Player nowPlayer = Player.BLACK;
     private myStack<Point> points;
-    Point[][] two = new Point[19][19];
+    private Point[][] now = new Point[21][21];
+    private Point[][] previous = new Point[21][21];
     private LinkedList<Point[][]> pointsList = new LinkedList<>();
 
     public ChessPad() {
@@ -20,6 +21,7 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
         setSize(440, 440);
         addMouseListener(this);
         setLayout(null);
+        initBorder();
     }
 
     public void paintComponent(Graphics g) {
@@ -43,26 +45,53 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
     }
 
 
-    public void setBorder(Point[][] points) {
-        removePoints();
+    public void cpyBorder(Point[][] src, Point[][] dst) {
         for (int i = 1; i <= 19; i++)
             for (int j = 1; j <= 19; j++) {
-                addPoint(points[i][j]);
+                dst[i][j] = src[i][j];
             }
     }
 
-    public void addPoint(Point point) {
-        int x = point.getX();
-        int y = point.getY();
-        int a = (x + 10) / 20, b = (y + 10) / 20;
-        if (x / 20 < 2 || y / 20 < 2 || x / 20 > 19 || y / 20 > 19) {
-        } else {
-            this.add(point);
-            point.setBounds(a * 20 - 10, b * 20 - 10, 20, 20);
-        }
+    public void initBorder() {
+        int dim = 19;
+        for (int i = 2; i <= dim + 1; i++)
+            for (int j = 2; j <= dim + 1; j++) {
+                now[i][j] = new Point(Player.NONE, i * 20 - 10, j * 20 - 10);
+            }
+        now[2][2].setType(Point.Type.CRN_TL);
+        now[2][dim + 1].setType(Point.Type.CRN_TR);
+        now[dim + 1][2].setType(Point.Type.CRN_BL);
+        now[dim + 1][dim + 1].setType(Point.Type.CRN_BR);
+        for (int i = 2; i <= dim + 1; i++)
+            now[2][i].setType(Point.Type.E_T);
+        for (int i = 2; i <= dim + 1; i++)
+            now[i][2].setType(Point.Type.E_L);
+        for (int i = 2; i <= dim + 1; i++)
+            now[dim + 1][i].setType(Point.Type.E_B);
+        for (int i = 2; i <= dim + 1; i++)
+            now[i][dim + 1].setType(Point.Type.E_R);
+    }
+
+    public void backupBorder() {
+        cpyBorder(now, previous);
+    }
+
+    public void restoreBorder() {
+        removePoints();
+        cpyBorder(previous, now);
+        for (int i = 2; i <= 20; i++)
+            for (int j = 2; j <= 20; j++) {
+                if (now[i][j].getPlayer() == Player.NONE) continue;
+                this.add(now[i][j]);
+                now[i][j].setBounds(now[i][j].getX() * 20 - 10, now[i][j].getY() * 20 - 10, 20, 20);
+            }
+        if (nowPlayer == Player.BLACK)
+            nowPlayer = Player.WHITE;
+        else nowPlayer = Player.BLACK;
     }
 
     public void addPoint(int x, int y) {
+        backupBorder();
         Point point = null;
         int a = (x + 10) / 20, b = (y + 10) / 20;
         if (nowPlayer == Player.BLACK) {
@@ -70,7 +99,7 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
         } else if (nowPlayer == Player.WHITE) {
             point = new Point(Player.WHITE, a, b);
         } else {
-            System.exit(0);
+            return;
         }
         if (x / 20 < 2 || y / 20 < 2 || x / 20 > 19 || y / 20 > 19) {
         } else {
@@ -84,8 +113,17 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
                 nowPlayer = Player.WHITE;
             }
             points.push(point);
-            two[a][b] = point;
+            now[a][b] = point;
         }
+    }
+
+    public boolean isDead(Point[][] points, int x, int y) {
+        if (points[x + 1][y].getPlayer() == Player.NONE
+                || points[x][y + 1].getPlayer() == Player.NONE
+                || points[x - 1][y].getPlayer() == Player.NONE
+                || points[x][y - 1].getPlayer() == Player.NONE)
+            return false;
+        return true;
     }
 
 
@@ -105,6 +143,8 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
             int x = e.getX();
             int y = e.getY();
             addPoint(x, y);
+        } else if (e.getModifiersEx() == InputEvent.BUTTON3_DOWN_MASK) {
+            restoreBorder();
         }
     }
 

@@ -1,7 +1,6 @@
 package com.company.baduk.Client;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -9,7 +8,6 @@ public class Begin extends JFrame {
     ChessPad chesspad = new ChessPad();
 
     public Begin() {
-        //chesspad.setBackground(Color.ORANGE);
         setVisible(true);
         setLayout(null);
         add(chesspad);
