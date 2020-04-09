@@ -1,6 +1,8 @@
 package com.company.baduk.Client;
 
+import com.company.baduk.DataStruct.Player;
 import com.company.baduk.DataStruct.Tool;
+import com.company.baduk.DataStruct.UpdateMessages;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,11 +15,12 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Begin extends JFrame {
-    ChessPad chesspad = new ChessPad();
+    ChessPad chesspad;
     JTextArea score = new JTextArea();
     JButton pass = new JButton("跳过");
     JButton give_up = new JButton("认输");
     JButton undo = new JButton("悔棋");
+    static JLabel label;
     static Socket s;
     static InputStream inputStream;
     static OutputStream outputStream;
@@ -26,7 +29,7 @@ public class Begin extends JFrame {
 
 
     public Begin() {
-        init();
+
         // String ip = JOptionPane.showInputDialog("请输入服务器ip:");
         // if (ip == null) System.exit(0);
         //if (Tool.ipCheck(ip)) {
@@ -44,6 +47,7 @@ public class Begin extends JFrame {
 
     public void request(String roomName) {
         int x = Tool.encode(roomName);
+        System.out.println("after encode:\n" + x);
         try {
             initStream();
             outputStream.write(x);
@@ -64,7 +68,6 @@ public class Begin extends JFrame {
     public static void write(Object point) {
         try {
             if (objectOutputStream == null) objectOutputStream = new ObjectOutputStream(outputStream);
-
             objectOutputStream.writeObject(point);
         } catch (IOException e) {
             e.printStackTrace();
@@ -92,7 +95,7 @@ public class Begin extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int n = JOptionPane.showConfirmDialog(null, "请确认:\n是否跳过?", "提示", JOptionPane.YES_NO_OPTION);//i=0/1
                 if (n == 0)
-                    System.out.println("是");
+                    write(UpdateMessages.CLIENT_PASS);
                 //发送跳过
             }
         });
@@ -101,7 +104,7 @@ public class Begin extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int n = JOptionPane.showConfirmDialog(null, "请确认:\n是否认输?", "提示", JOptionPane.YES_NO_OPTION);//i=0/1
                 if (n == 0)
-                    System.out.println("是");
+                    write(UpdateMessages.CLIENT_GIVE_UP);
                 //发送认输
             }
         });
@@ -110,8 +113,8 @@ public class Begin extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int n = JOptionPane.showConfirmDialog(null, "请确认:\n是否悔棋?", "提示", JOptionPane.YES_NO_OPTION);//i=0/1
                 if (n == 0)
+                    write(UpdateMessages.RECVD_MOVE);
                     chesspad.restoreBorder();
-
             }
         });
         score.setEditable(false);
@@ -120,6 +123,9 @@ public class Begin extends JFrame {
     }
 
     public void start() {
+        label = new JLabel("现在是黑子下棋", JLabel.CENTER);
+        chesspad = new ChessPad((Player) read());
+        init();
         setTitle("围棋");
         setVisible(true);
         setLayout(null);
@@ -128,7 +134,6 @@ public class Begin extends JFrame {
         add(pass);
         add(undo);
         add(score);
-        JLabel label = new JLabel("现在是黑子下棋", JLabel.CENTER);
         add(label);
         label.setBackground(Color.orange);
         label.setBounds(130, 55, 320, 26);

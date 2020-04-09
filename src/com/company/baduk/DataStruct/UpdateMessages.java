@@ -1,6 +1,6 @@
 package com.company.baduk.DataStruct;
 
 public enum UpdateMessages {
-    CLIENT_CONNECTED, RECVD_MOVE, RECVD_PASS, RECVD_DOUBLEPASS, RECVD_QUIT,
+    RECVD_MOVE, RECVD_DOUBLEPASS,
     CLIENT_GIVE_UP, CLIENT_PASS, ADD_POINT
 }

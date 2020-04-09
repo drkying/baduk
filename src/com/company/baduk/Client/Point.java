@@ -113,9 +113,6 @@ public class Point extends Canvas implements MouseListener, Serializable {
         } else if (player == Player.WHITE) {
             g.setColor(Color.WHITE);
         }
-//        else {
-//            System.exit(0);
-//        }
         g.fillOval(0, 0, 20, 20);
     }
 

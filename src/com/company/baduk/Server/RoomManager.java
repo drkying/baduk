@@ -23,11 +23,11 @@ public class RoomManager {
                 int i;
                 for (i = 0; i < rooms.size(); i++) {
                     Room e = rooms.get(i);
-                    System.out.println(rooms.size());
+                    System.out.println("finding");
                     System.out.println(e);
                     if (e.getRoomName() == x) {
                         e.setWhitePlayer(s);
-                        System.out.println("666" + e);
+                        System.out.println("found\n" + e);
                         new GameSocket(e.getBlackPlayer(), Player.BLACK, e.getWhitePlayer()).start();
                         new GameSocket(e.getWhitePlayer(), Player.WHITE, e.getBlackPlayer()).start();
                         break;
@@ -36,7 +36,7 @@ public class RoomManager {
                 if (i == rooms.size()) {
                     Room e = new Room(s, x);
                     rooms.add(e);
-                    System.out.println(e);
+                    System.out.println("not found\n" + e);
                 }
             }
         } catch (IOException e) {

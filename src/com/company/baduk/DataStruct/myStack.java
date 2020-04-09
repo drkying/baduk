@@ -1,6 +1,6 @@
 package com.company.baduk.DataStruct;
 
-public class myStack<T>{
+public class myStack<T> {
     private Node<T> top = null;//栈顶
 
     public myStack() {
