@@ -11,12 +11,12 @@ public class GameSocket extends Thread {
     Socket socket;
     Player nowPlayer;
     Socket anotherPlayer;
-    int finished;
+    Room room;
     ObjectInputStream in;
     ObjectOutputStream out;
 
-    public GameSocket(Socket socket, Player player, Socket anotherPlayer) {
-        finished = 0;
+    public GameSocket(Socket socket, Player player, Socket anotherPlayer, Room room) {
+        this.room = room;
         this.socket = socket;
         this.nowPlayer = player;
         this.anotherPlayer = anotherPlayer;
@@ -52,20 +52,28 @@ public class GameSocket extends Thread {
                         Point point = (Point) e;
                         out(msg);
                         out(point);
-                        if (finished != 0) finished = 0;
+                        if (room.getFinished() != 0) room.setFinished(0);
                         break;
                     case CLIENT_GIVE_UP:
                         UpdateMessages give_up = UpdateMessages.CLIENT_GIVE_UP;
                         out(give_up);
                         break;
                     case CLIENT_PASS:
-                        finished++;
-                        if (finished == 2) {
+                        room.startFinished();
+                        if (room.getFinished() == 2) {
                             out(UpdateMessages.RECVD_DOUBLEPASS);
-                        }
+                            new ObjectOutputStream(anotherPlayer.getOutputStream()).writeObject(UpdateMessages.RECVD_DOUBLEPASS);
+                        } else
+                            out(UpdateMessages.CLIENT_PASS);
                         break;
                     case RECVD_MOVE:
                         out(UpdateMessages.RECVD_MOVE);
+                        break;
+                    case MOVE_CONFIRM:
+                        out(UpdateMessages.MOVE_CONFIRM);
+                        break;
+                    default:
+                        out(msg);
                         break;
                 }
             }

@@ -28,8 +28,8 @@ public class RoomManager {
                     if (e.getRoomName() == x) {
                         e.setWhitePlayer(s);
                         System.out.println("found\n" + e);
-                        new GameSocket(e.getBlackPlayer(), Player.BLACK, e.getWhitePlayer()).start();
-                        new GameSocket(e.getWhitePlayer(), Player.WHITE, e.getBlackPlayer()).start();
+                        new GameSocket(e.getBlackPlayer(), Player.BLACK, e.getWhitePlayer(), e).start();
+                        new GameSocket(e.getWhitePlayer(), Player.WHITE, e.getBlackPlayer(), e).start();
                         break;
                     }
                 }

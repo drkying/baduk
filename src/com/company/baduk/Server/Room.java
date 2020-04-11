@@ -9,7 +9,22 @@ public class Room {
     private Socket whitePlayer;
     private Socket blackPlayer;
     private int roomName;
-    private boolean isConnected=false;
+    public int finished = 0;
+
+    public int getFinished() {
+        return finished;
+    }
+
+    public void setFinished(int finished) {
+        this.finished = finished;
+    }
+
+    public void startFinished() {
+        finished++;
+    }
+
+
+    private boolean isConnected = false;
     private List<Point[][]> chessHistory;
 
     @Override
@@ -40,7 +55,7 @@ public class Room {
     }
 
 
-    public Room(){
+    public Room() {
     }
 
     public Room(Socket blackPlayer, int roomName) {

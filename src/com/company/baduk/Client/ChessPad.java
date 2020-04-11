@@ -12,10 +12,11 @@ import java.util.LinkedList;
 public class ChessPad extends JPanel implements MouseListener, ActionListener {
     private Player nowPlayer = Player.BLACK;
     private boolean isYourTurn = false;
-    private myStack<Point> points;
+    private myStack<Point[][]> pointsHistory;
     private Point[][] now = new Point[21][21];
     private Point[][] previous = new Point[21][21];
     private LinkedList<Point[][]> pointsList = new LinkedList<>();
+    private List hash = new List();
 
     public ChessPad(Player nowPlayer) {
         this.nowPlayer = nowPlayer;
@@ -26,7 +27,7 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
             isYourTurn = false;
             Begin.label.setText("等待对方下棋。。。");
         }
-        points = new myStack<>();
+        pointsHistory = new myStack<>();
         this.setBackground(Color.ORANGE);
         setSize(440, 440);
         addMouseListener(this);
@@ -38,6 +39,14 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
                 readMessage();
             }
         }).start();
+    }
+
+    public boolean isYourTurn() {
+        return isYourTurn;
+    }
+
+    public void setYourTurn(boolean yourTurn) {
+        isYourTurn = yourTurn;
     }
 
     public void paintComponent(Graphics g) {
@@ -57,7 +66,7 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
 
     public void removePoints() {
         this.removeAll();
-        points = new myStack<>();
+        pointsHistory = new myStack<>();
     }
 
 
@@ -123,13 +132,12 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
                 this.add(point);
                 point.setBounds(a * 20 - 10, b * 20 - 10, 20, 20);
             }
-            points.push(point);
             now[a][b] = point;
+            pointsHistory.push(now);
             Begin.write(UpdateMessages.ADD_POINT);
             Begin.write(point);
             isYourTurn = false;
             Begin.label.setText("等待对方下棋。。。");
-
         }
     }
 
@@ -147,24 +155,38 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
                     break;
                 case CLIENT_GIVE_UP:
                     JOptionPane.showMessageDialog(null, "对方认输，你赢了！");
+                    JOptionPane.showMessageDialog(null, "游戏结束！");
+                    System.exit(0);
                     break;
                 case CLIENT_PASS:
-                    Begin.label.setText("对方跳过下棋，现在到你了！");
+                    JOptionPane.showMessageDialog(null, "对方跳过下棋，现在到你了！");
+                    isYourTurn = true;
+                    Begin.label.setText("现在到你下棋了！");
                     break;
                 case RECVD_MOVE:
                     int n = JOptionPane.showConfirmDialog(null, "请确认:\n对方请求悔棋，是否同意?", "提示", JOptionPane.YES_NO_OPTION);//i=0/1
-                    if (n == 0)
-                        ;
+                    if (n == 0) {
+                        restoreBorder();
+                        isYourTurn = false;
+                        Begin.label.setText("等待对方下棋。。。");
+                        System.out.println("我同意对方悔棋");
+                        Begin.write(UpdateMessages.MOVE_CONFIRM);
+                        System.out.println("发送我同意对方悔棋");
+                    } else System.out.println("我不同意对方悔棋");
+                    break;
+                case MOVE_CONFIRM:
+                    JOptionPane.showMessageDialog(null, "对方同意悔棋，现在到你了！");
+                    restoreBorder();
+                    isYourTurn = true;
+                    Begin.label.setText("现在到你下棋了！");
                     break;
                 case RECVD_DOUBLEPASS:
-                    JOptionPane.showMessageDialog(null, "双方都跳过下棋，比赛结束！\n最终成绩：\n黑：0;白：0\n黑棋赢了！");
+                    JOptionPane.showMessageDialog(null, "双方都跳过下棋，比赛结束！\n最终成绩：\n黑：0  白：0\n黑棋赢了！", "游戏结束", JOptionPane.INFORMATION_MESSAGE);
+                    System.exit(0);
                     break;
-                //
             }
         }
-
     }
-
 
 
     public boolean isDead(Point[][] points, int x, int y) {
@@ -179,12 +201,10 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
     }
 
     @Override
@@ -198,17 +218,14 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
     }
 
     public void addPoint(Point point) {

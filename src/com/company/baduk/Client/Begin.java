@@ -93,28 +93,41 @@ public class Begin extends JFrame {
         pass.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int n = JOptionPane.showConfirmDialog(null, "请确认:\n是否跳过?", "提示", JOptionPane.YES_NO_OPTION);//i=0/1
-                if (n == 0)
-                    write(UpdateMessages.CLIENT_PASS);
-                //发送跳过
+                if (chesspad.isYourTurn()) {
+                    int n = JOptionPane.showConfirmDialog(null, "请确认:\n是否跳过?", "提示", JOptionPane.YES_NO_OPTION);//i=0/1
+                    if (n == 0) {
+                        write(UpdateMessages.CLIENT_PASS);
+                        System.out.println("我发送了跳过");
+                        //发送跳过
+                        chesspad.setYourTurn(false);
+                        label.setText("等待对方下棋。。。");
+                    }
+                }
             }
         });
         give_up.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int n = JOptionPane.showConfirmDialog(null, "请确认:\n是否认输?", "提示", JOptionPane.YES_NO_OPTION);//i=0/1
-                if (n == 0)
+                if (n == 0) {
+                    System.out.println("我发送了认输");
                     write(UpdateMessages.CLIENT_GIVE_UP);
+                    JOptionPane.showMessageDialog(null, "你认输，游戏结束！");
+                    System.exit(0);
+                }
                 //发送认输
             }
         });
         undo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int n = JOptionPane.showConfirmDialog(null, "请确认:\n是否悔棋?", "提示", JOptionPane.YES_NO_OPTION);//i=0/1
-                if (n == 0)
-                    write(UpdateMessages.RECVD_MOVE);
-                    chesspad.restoreBorder();
+                if (!chesspad.isYourTurn()) {
+                    int n = JOptionPane.showConfirmDialog(null, "请确认:\n是否悔棋?", "提示", JOptionPane.YES_NO_OPTION);//i=0/1
+                    if (n == 0) {
+                        System.out.println("我发送了悔棋");
+                        write(UpdateMessages.RECVD_MOVE);
+                    }
+                }
             }
         });
         score.setEditable(false);
