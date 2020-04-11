@@ -27,17 +27,6 @@ public class Room {
     private boolean isConnected = false;
     private List<Point[][]> chessHistory;
 
-    @Override
-    public String toString() {
-        return "Room{" +
-                "whitePlayer=" + whitePlayer +
-                ", blackPlayer=" + blackPlayer +
-                ", roomName=" + roomName +
-                ", isConnected=" + isConnected +
-                ", chessHistory=" + chessHistory +
-                '}';
-    }
-
     public boolean isConnected() {
         return isConnected;
     }

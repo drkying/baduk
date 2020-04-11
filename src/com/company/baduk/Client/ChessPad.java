@@ -17,6 +17,7 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
     private Point[][] previous = new Point[21][21];
     private LinkedList<Point[][]> pointsList = new LinkedList<>();
     private List hash = new List();
+    int dim = 19;
 
     public ChessPad(Player nowPlayer) {
         this.nowPlayer = nowPlayer;
@@ -39,6 +40,7 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
                 readMessage();
             }
         }).start();
+        backupBorder();
     }
 
     public boolean isYourTurn() {
@@ -71,30 +73,17 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
 
 
     public void cpyBorder(Point[][] src, Point[][] dst) {
-        for (int i = 1; i <= 19; i++)
-            for (int j = 1; j <= 19; j++) {
+        for (int i = 2; i <= dim + 1; i++)
+            for (int j = 2; j <= dim + 1; j++) {
                 dst[i][j] = src[i][j];
             }
     }
 
     public void initBorder() {
-        int dim = 19;
         for (int i = 2; i <= dim + 1; i++)
             for (int j = 2; j <= dim + 1; j++) {
-                now[i][j] = new Point(Player.NONE, i * 20 - 10, j * 20 - 10);
+                now[i][j] = new Point(Player.NONE, i, j);
             }
-        now[2][2].setType(Point.Type.CRN_TL);
-        now[2][dim + 1].setType(Point.Type.CRN_TR);
-        now[dim + 1][2].setType(Point.Type.CRN_BL);
-        now[dim + 1][dim + 1].setType(Point.Type.CRN_BR);
-        for (int i = 2; i <= dim + 1; i++)
-            now[2][i].setType(Point.Type.E_T);
-        for (int i = 2; i <= dim + 1; i++)
-            now[i][2].setType(Point.Type.E_L);
-        for (int i = 2; i <= dim + 1; i++)
-            now[dim + 1][i].setType(Point.Type.E_B);
-        for (int i = 2; i <= dim + 1; i++)
-            now[i][dim + 1].setType(Point.Type.E_R);
     }
 
     public void backupBorder() {
@@ -186,16 +175,6 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
                     break;
             }
         }
-    }
-
-
-    public boolean isDead(Point[][] points, int x, int y) {
-        if (points[x + 1][y].getPlayer() == Player.NONE
-                || points[x][y + 1].getPlayer() == Player.NONE
-                || points[x - 1][y].getPlayer() == Player.NONE
-                || points[x][y - 1].getPlayer() == Player.NONE)
-            return false;
-        return true;
     }
 
 

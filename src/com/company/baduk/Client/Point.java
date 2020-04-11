@@ -12,7 +12,6 @@ public class Point extends Canvas implements MouseListener, Serializable {
     private Type type = Type.C;
     private int x, y;
     private int worth;
-    private boolean wasLastPut = false;
 
     public enum Type {
         /**
@@ -53,10 +52,6 @@ public class Point extends Canvas implements MouseListener, Serializable {
         CRN_TR
     }
 
-    public boolean isWasLastPut() {
-        return wasLastPut;
-    }
-
     public Player getPlayer() {
         return player;
     }
@@ -73,6 +68,27 @@ public class Point extends Canvas implements MouseListener, Serializable {
         this.type = type;
     }
 
+    public void setType() {
+        if ((x > 2 && x < 20) && (y > 2 && y < 20)) {
+            type = Type.C;
+        } else if (x == 2 && y == 2) {
+            type = Type.CRN_TL;
+        } else if (x == 20 && y == 2) {
+            type = Type.CRN_TR;
+        } else if (x == 2 && y == 20) {
+            type = Type.CRN_BL;
+        } else if (x == 20 && y == 20) {
+            type = Type.CRN_BR;
+        } else if (x == 2 && (y > 2 && y < 20)) {
+            type = Type.E_T;
+        } else if (y == 2 && (x > 2 && x < 20)) {
+            type = Type.E_L;
+        } else if (x == 20 && (y > 2 && y < 20)) {
+            type = Type.E_B;
+        } else if (y == 20 && (x > 2 && x < 20)) {
+            type = Type.E_R;
+        }
+    }
 
     @Override
     public int getX() {
@@ -92,19 +108,13 @@ public class Point extends Canvas implements MouseListener, Serializable {
         this.y = y;
     }
 
-    public Point(Type type) {
-        this.player = Player.NONE;
-        this.type = type;
-        setSize(20, 20);
-        addMouseListener(this);
-    }
-
     public Point(Player player, int x, int y) {
         this.player = player;
         this.x = x;
         this.y = y;
         setSize(20, 20);
         addMouseListener(this);
+        setType();
     }
 
     public void paint(Graphics g) {

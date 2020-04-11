@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e45357d7-81b1-48a1-b20f-656c1f1f2df9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/myGraph.java" afterDir="false" />
+    <list default="true" id="e45357d7-81b1-48a1-b20f-656c1f1f2df9" name="Default Changelist" comment="基础功能实现&#10;待实现:&#10; 围棋规则">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Begin$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Begin$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Begin.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Begin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/ChessPad.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/ChessPad.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Client/Begin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Client/Begin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Client/ChessPad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Client/ChessPad.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/Constants.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/UpdateMessages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/UpdateMessages.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Server/GameSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Server/GameSocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Client/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Client/Point.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/Tool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/Tool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Server/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Server/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Server/RoomManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Server/RoomManager.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -119,7 +112,7 @@
       <workItem from="1586396807873" duration="1067000" />
       <workItem from="1586413502553" duration="4675000" />
       <workItem from="1586485351598" duration="2090000" />
-      <workItem from="1586564524303" duration="5170000" />
+      <workItem from="1586564524303" duration="7972000" />
     </task>
     <task id="LOCAL-00001" summary="界面绘制完成，下一步、网络请求">
       <created>1586232165094</created>
@@ -142,7 +135,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586433227142</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="基础功能实现&#10;待实现:&#10; 围棋规则">
+      <created>1586570935334</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1586570935334</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,7 +166,8 @@
     <MESSAGE value="界面绘制完成，下一步、网络请求" />
     <MESSAGE value="network request and get" />
     <MESSAGE value="network request improvement" />
-    <option name="LAST_COMMIT_MESSAGE" value="network request improvement" />
+    <MESSAGE value="基础功能实现&#10;待实现:&#10; 围棋规则" />
+    <option name="LAST_COMMIT_MESSAGE" value="基础功能实现&#10;待实现:&#10; 围棋规则" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

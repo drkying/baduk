@@ -1,5 +1,7 @@
 package com.company.baduk.DataStruct;
 
+import com.company.baduk.Client.Point;
+
 public class Tool {
     public static boolean ipCheck(String text) {
         if (text != null && !text.isEmpty()) {
@@ -26,5 +28,14 @@ public class Tool {
             s += (int) roomName.charAt(i);
         }
         return s;
+    }
+
+    public boolean isDead(Point[][] points, int x, int y) {
+        if (points[x + 1][y].getPlayer() == Player.NONE
+                || points[x][y + 1].getPlayer() == Player.NONE
+                || points[x - 1][y].getPlayer() == Player.NONE
+                || points[x][y - 1].getPlayer() == Player.NONE)
+            return false;
+        return true;
     }
 }
