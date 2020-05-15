@@ -6,12 +6,13 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Point extends Canvas implements MouseListener, Serializable {
-    private Player player = Player.NONE;
-    private Type type = Type.C;
-    private int x, y;
-    private int worth;
+    private static final long serialVersionUID = -6118690463850244130L;
+    private Player player = Player.NONE;    //玩家类别
+    private Type type = Type.C;     //棋子位置类别
+    private int x, y;   //棋子坐标
 
     public enum Type {
         /**
@@ -149,5 +150,21 @@ public class Point extends Canvas implements MouseListener, Serializable {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point point = (Point) o;
+        return x == point.x &&
+                y == point.y &&
+                player == point.player &&
+                type == point.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(player, type, x, y);
     }
 }

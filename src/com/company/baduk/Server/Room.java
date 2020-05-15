@@ -1,13 +1,13 @@
 package com.company.baduk.Server;
 
 import com.company.baduk.Client.Point;
+import com.company.baduk.DataStruct.PlayerSocket;
 
-import java.net.Socket;
 import java.util.List;
 
 public class Room {
-    private Socket whitePlayer;
-    private Socket blackPlayer;
+    private PlayerSocket whitePlayer;
+    private PlayerSocket blackPlayer;
     private int roomName;
     public int finished = 0;
 
@@ -23,6 +23,16 @@ public class Room {
         finished++;
     }
 
+    @Override
+    public String toString() {
+        return "Room{" +
+                "whitePlayer=" + whitePlayer +
+                ", blackPlayer=" + blackPlayer +
+                ", roomName=" + roomName +
+                ", finished=" + finished +
+                ", isConnected=" + isConnected +
+                '}';
+    }
 
     private boolean isConnected = false;
     private List<Point[][]> chessHistory;
@@ -47,24 +57,24 @@ public class Room {
     public Room() {
     }
 
-    public Room(Socket blackPlayer, int roomName) {
+    public Room(PlayerSocket blackPlayer, int roomName) {
         this.blackPlayer = blackPlayer;
         this.roomName = roomName;
     }
 
-    public Socket getWhitePlayer() {
+    public PlayerSocket getWhitePlayer() {
         return whitePlayer;
     }
 
-    public void setWhitePlayer(Socket whitePlayer) {
+    public void setWhitePlayer(PlayerSocket whitePlayer) {
         this.whitePlayer = whitePlayer;
     }
 
-    public Socket getBlackPlayer() {
+    public PlayerSocket getBlackPlayer() {
         return blackPlayer;
     }
 
-    public void setBlackPlayer(Socket blackPlayer) {
+    public void setBlackPlayer(PlayerSocket blackPlayer) {
         this.blackPlayer = blackPlayer;
     }
 }

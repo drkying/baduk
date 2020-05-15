@@ -1,6 +1,7 @@
 package com.company.baduk.Client;
 
 import com.company.baduk.DataStruct.Player;
+import com.company.baduk.DataStruct.PlayerSocket;
 import com.company.baduk.DataStruct.Tool;
 import com.company.baduk.DataStruct.UpdateMessages;
 
@@ -16,77 +17,41 @@ import java.net.UnknownHostException;
 
 public class Begin extends JFrame {
     ChessPad chesspad;
-    JTextArea score = new JTextArea();
+    PlayerSocket playerSocket;
+    static JTextArea score = new JTextArea();
     JButton pass = new JButton("跳过");
     JButton give_up = new JButton("认输");
     JButton undo = new JButton("悔棋");
     static JLabel label;
-    static Socket s;
-    static InputStream inputStream;
-    static OutputStream outputStream;
-    static ObjectInputStream objectInputStream;
-    static ObjectOutputStream objectOutputStream;
 
 
     public Begin() {
-
-        // String ip = JOptionPane.showInputDialog("请输入服务器ip:");
-        // if (ip == null) System.exit(0);
-        //if (Tool.ipCheck(ip)) {
-        //  String roomName = JOptionPane.showInputDialog("请输入房间号:");
-        //  request(roomName);
-        request("1");
-        System.out.println(4);
-        start();
-
-//        } else {
-//            JOptionPane.showMessageDialog(null, "输入的ip不合法");
-//            System.exit(0);
+        String ip, roomName;
+//        ip = JOptionPane.showInputDialog("请输入服务器ip:");
+//        while (!Tool.ipCheck(ip)){
+//            JOptionPane.showMessageDialog(null, "输入的ip不合法,请重试");
+//            ip = JOptionPane.showInputDialog("请输入服务器ip:");
 //        }
+//        roomName = JOptionPane.showInputDialog("请输入房间号:");
+
+        ip = "127.0.0.1";
+        roomName = "233";
+        request(roomName, ip);
+        start();
     }
 
-    public void request(String roomName) {
+    public void request(String roomName, String ip) {
         int x = Tool.encode(roomName);
         System.out.println("after encode:\n" + x);
         try {
-            initStream();
-            outputStream.write(x);
+            playerSocket = new PlayerSocket(new Socket(ip, 8000));
+            playerSocket.writeInt(x);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
         System.out.println("request finish");
-    }
-
-    private void initStream() throws IOException {
-        s = new Socket("127.0.0.1", 8000);
-        outputStream = s.getOutputStream();
-        inputStream = s.getInputStream();
-    }
-
-    public static void write(Object point) {
-        try {
-            if (objectOutputStream == null) objectOutputStream = new ObjectOutputStream(outputStream);
-            objectOutputStream.writeObject(point);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static Object read() {
-        Object point = null;
-        try {
-            if (objectInputStream == null) objectInputStream = new ObjectInputStream(inputStream);
-            if ((point = objectInputStream.readObject()) != (null)) {
-                return point;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return point;
     }
 
     public void init() {
@@ -96,7 +61,7 @@ public class Begin extends JFrame {
                 if (chesspad.isYourTurn()) {
                     int n = JOptionPane.showConfirmDialog(null, "请确认:\n是否跳过?", "提示", JOptionPane.YES_NO_OPTION);//i=0/1
                     if (n == 0) {
-                        write(UpdateMessages.CLIENT_PASS);
+                        playerSocket.write(UpdateMessages.CLIENT_PASS);
                         System.out.println("我发送了跳过");
                         //发送跳过
                         chesspad.setYourTurn(false);
@@ -111,7 +76,7 @@ public class Begin extends JFrame {
                 int n = JOptionPane.showConfirmDialog(null, "请确认:\n是否认输?", "提示", JOptionPane.YES_NO_OPTION);//i=0/1
                 if (n == 0) {
                     System.out.println("我发送了认输");
-                    write(UpdateMessages.CLIENT_GIVE_UP);
+                    playerSocket.write(UpdateMessages.CLIENT_GIVE_UP);
                     JOptionPane.showMessageDialog(null, "你认输，游戏结束！");
                     System.exit(0);
                 }
@@ -125,7 +90,7 @@ public class Begin extends JFrame {
                     int n = JOptionPane.showConfirmDialog(null, "请确认:\n是否悔棋?", "提示", JOptionPane.YES_NO_OPTION);//i=0/1
                     if (n == 0) {
                         System.out.println("我发送了悔棋");
-                        write(UpdateMessages.RECVD_MOVE);
+                        playerSocket.write(UpdateMessages.RECVD_MOVE);
                     }
                 }
             }
@@ -137,7 +102,16 @@ public class Begin extends JFrame {
 
     public void start() {
         label = new JLabel("现在是黑子下棋", JLabel.CENTER);
-        chesspad = new ChessPad((Player) read());
+        playerSocket.write(UpdateMessages.GAME_START);
+        System.out.println("准备开始");
+        Player temp = null;
+        try {
+            temp = (Player) playerSocket.read();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("确认身份");
+        chesspad = new ChessPad(temp, playerSocket);
         init();
         setTitle("围棋");
         setVisible(true);

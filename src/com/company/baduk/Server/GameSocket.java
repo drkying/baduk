@@ -2,101 +2,81 @@ package com.company.baduk.Server;
 
 import com.company.baduk.Client.Point;
 import com.company.baduk.DataStruct.Player;
+import com.company.baduk.DataStruct.PlayerSocket;
 import com.company.baduk.DataStruct.UpdateMessages;
 
-import java.io.*;
-import java.net.Socket;
+import java.io.IOException;
 
 public class GameSocket extends Thread {
-    Socket socket;
     Player nowPlayer;
-    Socket anotherPlayer;
+    PlayerSocket thisPlayer;
+    PlayerSocket anotherPlayer;
     Room room;
-    ObjectInputStream in;
-    ObjectOutputStream out;
 
-    public GameSocket(Socket socket, Player player, Socket anotherPlayer, Room room) {
+    public GameSocket(Player nowPlayer, PlayerSocket thisPlayer, PlayerSocket anotherPlayer, Room room) {
         this.room = room;
-        this.socket = socket;
-        this.nowPlayer = player;
+        this.thisPlayer = thisPlayer;
+        this.nowPlayer = nowPlayer;
         this.anotherPlayer = anotherPlayer;
-        try {
-            out = new ObjectOutputStream(anotherPlayer.getOutputStream());
-            out.writeObject(nowPlayer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void out(Object msg) {
-        try {
-            out.writeObject(msg);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     public void run() {
+        Object temp;
+        System.out.println("准备开始");
+        System.out.println("确认身份");
         try {
-            if (in == null)
-                in = new ObjectInputStream(socket.getInputStream());
-            if (out == null)
-                out = new ObjectOutputStream(anotherPlayer.getOutputStream());
-            Object e;
-            while ((e = in.readObject()) != (null)) {
-                UpdateMessages msg = (UpdateMessages) e;
+            while ((temp = thisPlayer.read()) != (null)) {
+                UpdateMessages msg = (UpdateMessages) temp;
+                System.out.println("读取请求成功");
                 switch (msg) {
                     case ADD_POINT:
-                        e = in.readObject();
-                        Point point = (Point) e;
-                        out(msg);
-                        out(point);
+                        temp = thisPlayer.read();
+                        Point point = (Point) temp;
+                        anotherPlayer.write(msg);
+                        anotherPlayer.write(point);
                         if (room.getFinished() != 0) room.setFinished(0);
                         break;
                     case CLIENT_GIVE_UP:
                         UpdateMessages give_up = UpdateMessages.CLIENT_GIVE_UP;
-                        out(give_up);
+                        anotherPlayer.write(give_up);
                         break;
                     case CLIENT_PASS:
                         room.startFinished();
                         if (room.getFinished() == 2) {
-                            out(UpdateMessages.RECVD_DOUBLEPASS);
-                            new ObjectOutputStream(anotherPlayer.getOutputStream()).writeObject(UpdateMessages.RECVD_DOUBLEPASS);
+                            anotherPlayer.write(UpdateMessages.GAME_FINISH);
+                            thisPlayer.write(UpdateMessages.GAME_FINISH);
                         } else
-                            out(UpdateMessages.CLIENT_PASS);
+                            anotherPlayer.write(UpdateMessages.CLIENT_PASS);
                         break;
                     case RECVD_MOVE:
-                        out(UpdateMessages.RECVD_MOVE);
+                        anotherPlayer.write(UpdateMessages.RECVD_MOVE);
                         break;
-                    case MOVE_CONFIRM:
-                        out(UpdateMessages.MOVE_CONFIRM);
+                    case AGREE_RECVD:
+                        anotherPlayer.write(UpdateMessages.AGREE_RECVD);
                         break;
                     default:
-                        out(msg);
+                        anotherPlayer.write(msg);
                         break;
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            if (socket != null) {
+            if (thisPlayer.getSocket() != null) {
                 try {
-                    if (in != null)
-                        in.close();
-                    if (out != null)
-                        out.close();
-                    socket.close();
+                    thisPlayer.getSocket().close();
                     for (int i = 0; i < RoomManager.rooms.size(); i++) {
-                        if (RoomManager.rooms.get(i).getBlackPlayer() == socket) {
+                        if (RoomManager.rooms.get(i).getBlackPlayer().getSocket() == thisPlayer.getSocket()
+                                || RoomManager.rooms.get(i).getWhitePlayer().getSocket() == thisPlayer.getSocket()) {
                             RoomManager.rooms.remove(i);
                             break;
                         }
                     }
-                    this.stop();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
             }
+            this.stop();
         }
     }
 }
