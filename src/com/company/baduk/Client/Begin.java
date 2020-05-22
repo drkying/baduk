@@ -102,7 +102,6 @@ public class Begin extends JFrame {
 
     public void start() {
         label = new JLabel("现在是黑子下棋", JLabel.CENTER);
-        playerSocket.write(UpdateMessages.GAME_START);
         System.out.println("准备开始");
         Player temp = null;
         try {

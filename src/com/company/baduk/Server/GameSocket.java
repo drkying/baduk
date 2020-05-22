@@ -55,6 +55,8 @@ public class GameSocket extends Thread {
                     case AGREE_RECVD:
                         anotherPlayer.write(UpdateMessages.AGREE_RECVD);
                         break;
+                    case GAME_START:
+                        break;
                     default:
                         anotherPlayer.write(msg);
                         break;

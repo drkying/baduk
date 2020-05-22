@@ -1,5 +1,6 @@
 package com.company.baduk.DataStruct;
 
+import com.company.baduk.Client.ChessPad;
 import com.company.baduk.Client.Point;
 
 public class Tool {
@@ -33,15 +34,6 @@ public class Tool {
         return s;
     }
 
-    public boolean isDead(Point[][] points, int x, int y) {
-        if (points[x + 1][y].getPlayer() == Player.NONE
-                || points[x][y + 1].getPlayer() == Player.NONE
-                || points[x - 1][y].getPlayer() == Player.NONE
-                || points[x][y - 1].getPlayer() == Player.NONE)
-            return false;
-        return true;
-    }
-
     public static String sumHashCode(Point[][] points) {
         int hash = 0;
         for (int i = 2; i <= 20; i++) {
@@ -51,7 +43,8 @@ public class Tool {
                     hash += (point.getX() * 3 + point.getY() * 5) * 7;
                 else if (point.getPlayer().equals(Player.WHITE))
                     hash += (point.getX() * 3 + point.getY() * 5) * 9;
-                else hash--;
+                else if (point.getPlayer().equals(Player.NONE))
+                    hash -= (point.getX() * 3 + point.getY() * 5) * 3;
             }
         }
         return String.valueOf(hash);
