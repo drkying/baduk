@@ -5,8 +5,6 @@ import com.company.baduk.DataStruct.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ChessPad extends JPanel implements MouseListener, ActionListener {
     public Player nowPlayer;
@@ -14,15 +12,14 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
     public boolean whiteGroup;
     public int currentGroup = 0;
     public PlayerSocket playerSocket;
-    public boolean isYourTurn = false;
+    public boolean isYourTurn;
     public Point[][] now = new Point[21][21];
     public Point[][] previous = new Point[21][21];
-    public List<Point[][]> chessHistory = new ArrayList<>();
-    public List<String> chessHash = new ArrayList<>();
     public int dim = 19;   //19X19的棋盘
-    public int[] block;
-    public int blockLength = 0, score_B = 0, score_W = 0;
+    public int score_B = 0, score_W = 0;
+    public static int W_eat_B = 0, B_eat_W = 0;
     public GoRules goRules;
+    public myHashTable chessPadHistory;
 
     //初始化棋盘
     public ChessPad(Player nowPlayer, PlayerSocket playerSocket) {
@@ -30,6 +27,7 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
         this.nowPlayer = nowPlayer;
         this.playerSocket = playerSocket;
         this.goRules = new GoRules(this);
+        this.chessPadHistory = new myHashTable();
 
         if (nowPlayer == Player.BLACK) {
             isYourTurn = true;
@@ -57,15 +55,14 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
     public void backupBorder() {
         previous = new Point[21][21];
         previous = Tool.clone(now);
-        chessHistory.add(previous);
-        chessHash.add(Tool.sumHashCode(previous));
+        chessPadHistory.add(previous);
         updateScore();
     }
 
     //恢复棋局，用于悔棋操作
     public void restoreBorder() {
-        Point[][] lastChessPad = chessHistory.get(chessHistory.size() - 2);
-        chessHistory.remove(chessHistory.size() - 1);
+        Point[][] lastChessPad = chessPadHistory.pop();
+
         this.removeAll();
         for (int i = 2; i <= 20; i++)
             for (int j = 2; j <= 20; j++) {
@@ -73,7 +70,6 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
                 this.add(lastChessPad[i][j]);
                 lastChessPad[i][j].setBounds(lastChessPad[i][j].getX() * 20 - 10, lastChessPad[i][j].getY() * 20 - 10, 20, 20);
             }
-        chessHash.remove(chessHash.size() - 1);
     }
 
     public boolean isYourTurn() {
@@ -100,6 +96,7 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
         goRules.checkDelete(point.getX(), point.getY(), now);
         backupBorder();
     }
+
     public void addPoint(int x, int y) {
         if (isYourTurn) {
             int a = (x + 10) / 20, b = (y + 10) / 20;
@@ -120,7 +117,7 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
                 }
 
                 Point[][] future = Tool.clone(now);
-                goRules.checkDelete(future[a][b].getX(), future[a][b].getY(), future);
+                goRules.checkDelete(future[a][b].getX(), future[a][b].getY(), future, false);
 
                 if (!check(future)) {
                     JOptionPane.showMessageDialog(null, "当前下棋位置导致重局，请重新下棋");
@@ -142,27 +139,25 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
     //更新计分板
     public void updateScore() {
         calcTerritory();
+        int score_B = this.score_B + B_eat_W, score_W = this.score_W + W_eat_B;
+        System.out.println("1:" + this.score_B + ";2:" + B_eat_W + ";3:" + this.score_W + ";4:" + W_eat_B);
         Begin.score.setText("计分板：" + "黑：" + score_B + " " + "白： " + score_W);
     }
 
     //判断是否出现重局的情况
     public boolean check(Point[][] future) {
-        String temp = Tool.sumHashCode(future);
-        System.out.println("hash History:");
-        for (String s : chessHash)
-            System.out.println(s);
-        System.out.println("future hash:" + temp);
-        for (int i = 0; i < chessHash.size(); i++) {
-            if (chessHash.get(i).equals(temp)) {
-                che:
-                for (int j = 2; j <= 20; j++) {
-                    for (int k = 2; k <= 20; k++) {
-                        if (!chessHistory.get(i)[j][k].equals(future[j][k]))
-                            break che;
-                        if (j == 20 && k == 20) {
-                            return false;
-                        }
-                    }
+        String temp = myHashTable.hashFun(future);
+        int id;
+        Point[][] past;
+        if ((id = chessPadHistory.find(temp)) != -1)
+            past = chessPadHistory.get(id);
+        else return true;
+        for (int j = 2; j <= 20; j++) {
+            for (int k = 2; k <= 20; k++) {
+                if (!past[j][k].equals(future[j][k]))
+                    return true;
+                if (j == 20 && k == 20) {
+                    return false;
                 }
             }
         }

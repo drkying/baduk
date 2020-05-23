@@ -29,12 +29,13 @@ public class Begin extends JFrame {
         String ip, roomName;
         ip = "127.0.0.1";
         roomName = "233";
-//        ip = JOptionPane.showInputDialog("请输入服务器ip:");
-//        while (!Tool.ipCheck(ip)){
-//            JOptionPane.showMessageDialog(null, "输入的ip不合法,请重试");
-//            ip = JOptionPane.showInputDialog("请输入服务器ip:");
-//        }
-//        roomName = JOptionPane.showInputDialog("请输入房间号:");
+
+        ip = JOptionPane.showInputDialog("请输入服务器ip:");
+        while (!Tool.ipCheck(ip)) {
+            JOptionPane.showMessageDialog(null, "输入的ip不合法,请重试");
+            ip = JOptionPane.showInputDialog("请输入服务器ip:");
+        }
+        roomName = JOptionPane.showInputDialog("请输入房间号:");
 
 
         request(roomName, ip);
@@ -45,12 +46,12 @@ public class Begin extends JFrame {
         int x = Tool.encode(roomName);
         System.out.println("after encode:\n" + x);
         try {
-            playerSocket = new PlayerSocket(new Socket(ip, 8000));
+            playerSocket = new PlayerSocket(new Socket(ip, 8001));
             playerSocket.writeInt(x);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "连接失败！");
+            System.exit(0);
         }
         System.out.println("request finish");
     }
@@ -139,6 +140,8 @@ public class Begin extends JFrame {
         });
         pack();
         setSize(600, 550);
+
+        JOptionPane.showMessageDialog(null, "连接成功！");
 
     }
 

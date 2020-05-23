@@ -16,6 +16,8 @@
       <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Client/ChessPad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Client/ChessPad.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/GoRules.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/GoRules.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/Tool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/Tool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/myStack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Server/RoomManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Server/RoomManager.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -44,7 +46,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../baduk1" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -141,7 +143,9 @@
       <workItem from="1589599933263" duration="4677000" />
       <workItem from="1590112288139" duration="6458000" />
       <workItem from="1590139238365" duration="9449000" />
-      <workItem from="1590197079192" duration="7880000" />
+      <workItem from="1590197079192" duration="8939000" />
+      <workItem from="1590216402506" duration="4187000" />
+      <workItem from="1590240531621" duration="1686000" />
     </task>
     <task id="LOCAL-00001" summary="界面绘制完成，下一步、网络请求">
       <created>1586232165094</created>
@@ -199,7 +203,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590212842221</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary=" add note">
+      <created>1590215386554</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1590215386554</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -228,7 +239,8 @@
     <MESSAGE value="implementation:&#10;   baduk rule:&#10;   eat points&#10;   bug: &#10;   can't prevent the same chess positions" />
     <MESSAGE value="fix eat points bug&#10;to do ,dajie" />
     <MESSAGE value="Finish All works&#10;Only need to add note" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finish All works&#10;Only need to add note" />
+    <MESSAGE value=" add note" />
+    <option name="LAST_COMMIT_MESSAGE" value=" add note" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -236,8 +248,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/company/baduk/Client/ChessPad.java</url>
-          <line>162</line>
-          <option name="timeStamp" value="20" />
+          <line>102</line>
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

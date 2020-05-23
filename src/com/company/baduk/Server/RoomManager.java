@@ -13,7 +13,7 @@ public class RoomManager {
 
     public RoomManager() {
         try {
-            int serverPort = 8000;
+            int serverPort = 8001;
             ServerSocket serverSocket = new ServerSocket(serverPort);
             while (true) {
                 PlayerSocket playerSocket = new PlayerSocket(serverSocket.accept());

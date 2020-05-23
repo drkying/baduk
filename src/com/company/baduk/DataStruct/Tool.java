@@ -36,22 +36,6 @@ public class Tool {
         return s;
     }
 
-    //为当前棋局生成一个哈希值
-    public static String sumHashCode(Point[][] points) {
-        int hash = 0;
-        for (int i = 2; i <= 20; i++) {
-            for (int j = 2; j <= 20; j++) {
-                Point point = points[i][j];
-                if (point.getPlayer().equals(Player.BLACK))
-                    hash += (point.getX() * 3 + point.getY() * 5) * 3;
-                else if (point.getPlayer().equals(Player.WHITE))
-                    hash += (point.getX() * 3 + point.getY() * 5) * 5;
-                else if (point.getPlayer().equals(Player.NONE))
-                    hash--;
-            }
-        }
-        return String.valueOf(hash);
-    }
 
     //java 对象的深拷贝
     public static <T extends Serializable> T clone(T obj) {
