@@ -24,6 +24,7 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
     public int blockLength = 0, score_B = 0, score_W = 0;
     public GoRules goRules;
 
+    //初始化棋盘
     public ChessPad(Player nowPlayer, PlayerSocket playerSocket) {
         initBorder();
         this.nowPlayer = nowPlayer;
@@ -52,6 +53,7 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
         backupBorder();
     }
 
+    // 对每一步的棋局进行备份
     public void backupBorder() {
         previous = new Point[21][21];
         previous = Tool.clone(now);
@@ -60,6 +62,7 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
         updateScore();
     }
 
+    //恢复棋局，用于悔棋操作
     public void restoreBorder() {
         Point[][] lastChessPad = chessHistory.get(chessHistory.size() - 2);
         chessHistory.remove(chessHistory.size() - 1);
@@ -82,19 +85,21 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
     }
 
 
+    //删除棋子
     public void removePoint(Point point, Point[][] temp) {
         int x = point.getX(), y = point.getY();
         remove(temp[point.getX()][point.getY()]);
         temp[x][y] = new Point(Player.NONE, x, y);
     }
 
+
+    //添加棋子
     public void addPoint(Point point) {
         this.add(point);
         now[point.getX()][point.getY()] = point;
         goRules.checkDelete(point.getX(), point.getY(), now);
         backupBorder();
     }
-
     public void addPoint(int x, int y) {
         if (isYourTurn) {
             int a = (x + 10) / 20, b = (y + 10) / 20;
@@ -113,14 +118,7 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
                 } else {
                     return;
                 }
-//                goRules.checkDelete(now[a][b].getX(), now[a][b].getY());
-////
-////                Point[][] future = Tool.clone(now);
-////                if (!check(future)) {
-////                    JOptionPane.showMessageDialog(null, "当前下棋位置导致重局，请重新下棋");
-////                    now[a][b].setPlayer(Player.NONE);
-////                    return;
-////                }
+
                 Point[][] future = Tool.clone(now);
                 goRules.checkDelete(future[a][b].getX(), future[a][b].getY(), future);
 
@@ -138,35 +136,17 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
                 isYourTurn = false;
                 Begin.label.setText("等待对方下棋。。。");
             }
-
         }
-
     }
 
+    //更新计分板
     public void updateScore() {
         calcTerritory();
         Begin.score.setText("计分板：" + "黑：" + score_B + " " + "白： " + score_W);
-
-
     }
 
-    public void outputChessPad(Point[][] now) {
-        System.out.println("chessPad:");
-        for (int i = 2; i <= 20; i++) {
-            for (int j = 2; j <= 20; j++) {
-                if (now[i][j].getPlayer() == Player.BLACK)
-                    System.out.print("[" + "●" + "]");
-                else if (now[i][j].getPlayer() == Player.WHITE)
-                    System.out.print("[" + "○" + "]");
-                else if (now[i][j].getPlayer() == Player.NONE)
-                    System.out.print("[" + " " + "]");
-            }
-            System.out.println("");
-        }
-    }
-
+    //判断是否出现重局的情况
     public boolean check(Point[][] future) {
-//        now[x][y].setPlayer(nowPlayer);
         String temp = Tool.sumHashCode(future);
         System.out.println("hash History:");
         for (String s : chessHash)
@@ -189,6 +169,8 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
         return true;
     }
 
+
+    //计算双方的得分
     public void calcTerritory() {
         int[][] mark = new int[dim + 2][dim + 2];
         score_B = 0;
@@ -270,6 +252,7 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
     public void mouseExited(MouseEvent e) {
     }
 
+    //绘制 19 X 19 的棋盘
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (int i = 40; i <= 400; i += 20) {
@@ -335,7 +318,14 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
                         Begin.label.setText("现在到你下棋了！");
                         break;
                     case GAME_FINISH:
-                        JOptionPane.showMessageDialog(null, "双方都跳过下棋，比赛结束！\n最终成绩：\n黑：0  白：0\n黑棋赢了！", "游戏结束", JOptionPane.INFORMATION_MESSAGE);
+                        if (score_B > score_W)
+                            JOptionPane.showMessageDialog(null, "双方都跳过下棋，比赛结束！\n最终成绩：\n黑：" + score_B + "  白：" + score_W + "\n黑棋赢了！", "游戏结束", JOptionPane.INFORMATION_MESSAGE);
+                        else if (score_B < score_W)
+                            JOptionPane.showMessageDialog(null, "双方都跳过下棋，比赛结束！\n最终成绩：\n黑：" + score_B + "  白：" + score_W + "\n白棋赢了！", "游戏结束", JOptionPane.INFORMATION_MESSAGE);
+                        else if (score_W == score_B)
+                            JOptionPane.showMessageDialog(null, "双方都跳过下棋，比赛结束！\n最终成绩：\n黑：" + score_B + "  白：" + score_W + "\n双方平局！", "游戏结束", JOptionPane.INFORMATION_MESSAGE);
+
+
                         System.exit(0);
                         break;
                 }
@@ -343,14 +333,9 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "与对方的网络连接断开，游戏结束！");
+            System.exit(0);
         }
-    }
-
-    public void cpyBorder(Point[][] src, Point[][] dst) {
-        for (int i = 2; i <= dim + 1; i++)
-            for (int j = 2; j <= dim + 1; j++) {
-                dst[i][j] = src[i][j];
-            }
     }
 }
 

@@ -13,6 +13,7 @@ public class GoRules {
         this.chessPad = chessPad;
     }
 
+    //使用FloodFill算法找到特定棋子所在的棋子块
     public void FloodFill(int i, int j, Point[][] temp) {
         //Left
         if (i - 1 >= 2 && temp[i - 1][j].getPlayer() == temp[i][j].getPlayer() && !isInBlock((i - 1) * 100 + j)) {
@@ -47,6 +48,7 @@ public class GoRules {
         return false;
     }
 
+    //判断当前下子是否有吃子的情况
     public void checkDelete(int x, int y, Point[][] temp) {
         if (x - 1 >= 2) doStep(x - 1, y, temp);
         if (y - 1 >= 2) doStep(x, y - 1, temp);
@@ -66,12 +68,14 @@ public class GoRules {
 
             if (hasQi(temp)) {
             } else {
+                //进行吃子
                 for (int t = 0; t < blockLength; t++)
                     chessPad.removePoint(temp[block[t] / 100][block[t] % 100], temp);
             }
         }
     }
 
+    //判断当前棋子块是否有气，即未被完全包围
     public boolean hasQi(Point[][] temp) {
         int i, j;
         for (int t = 0; t < blockLength; t++) {

@@ -27,6 +27,8 @@ public class Begin extends JFrame {
 
     public Begin() {
         String ip, roomName;
+        ip = "127.0.0.1";
+        roomName = "233";
 //        ip = JOptionPane.showInputDialog("请输入服务器ip:");
 //        while (!Tool.ipCheck(ip)){
 //            JOptionPane.showMessageDialog(null, "输入的ip不合法,请重试");
@@ -34,8 +36,7 @@ public class Begin extends JFrame {
 //        }
 //        roomName = JOptionPane.showInputDialog("请输入房间号:");
 
-        ip = "127.0.0.1";
-        roomName = "233";
+
         request(roomName, ip);
         start();
     }

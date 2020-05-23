@@ -36,6 +36,7 @@ public class Tool {
         return s;
     }
 
+    //为当前棋局生成一个哈希值
     public static String sumHashCode(Point[][] points) {
         int hash = 0;
         for (int i = 2; i <= 20; i++) {
@@ -52,6 +53,7 @@ public class Tool {
         return String.valueOf(hash);
     }
 
+    //java 对象的深拷贝
     public static <T extends Serializable> T clone(T obj) {
         T cloneObj = null;
         try {
