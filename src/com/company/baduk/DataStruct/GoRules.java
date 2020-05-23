@@ -17,7 +17,7 @@ public class GoRules {
     public void FloodFill(int i, int j, Point[][] temp) {
         //Left
         if (i - 1 >= 2 && temp[i - 1][j].getPlayer() == temp[i][j].getPlayer() && !isInBlock((i - 1) * 100 + j)) {
-            block[blockLength++] = (i - 1) * 100 + j;
+            block[blockLength] = (i - 1) * 100 + j;
             blockLength++;
             FloodFill(i - 1, j, temp);
         }
@@ -98,7 +98,7 @@ public class GoRules {
         for (int t = 0; t < blockLength; t++) {
             i = block[t] / 100;
             j = block[t] % 100;
-            //System.out.println(now[i + 1][j]);
+            //System.out.println(i+"j:"+j);
             if (i - 1 >= 2 && temp[i - 1][j].getPlayer() == Player.NONE) return true;
             if (i + 1 < 21 && temp[i + 1][j].getPlayer() == Player.NONE) return true;
             if (j - 1 >= 2 && temp[i][j - 1].getPlayer() == Player.NONE) return true;

@@ -84,7 +84,7 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
     //删除棋子
     public void removePoint(Point point, Point[][] temp) {
         int x = point.getX(), y = point.getY();
-        remove(temp[point.getX()][point.getY()]);
+        this.remove(temp[point.getX()][point.getY()]);
         temp[x][y] = new Point(Player.NONE, x, y);
     }
 
@@ -124,8 +124,8 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
                     now[a][b].setPlayer(Player.NONE);
                     return;
                 }
-                goRules.checkDelete(now[a][b].getX(), now[a][b].getY(), now);
                 this.add(now[a][b]);
+                goRules.checkDelete(now[a][b].getX(), now[a][b].getY(), now);
                 now[a][b].setBounds(a * 20 - 10, b * 20 - 10, 20, 20);
                 backupBorder();
                 playerSocket.write(UpdateMessages.ADD_POINT);

@@ -6,18 +6,11 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e45357d7-81b1-48a1-b20f-656c1f1f2df9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/myHashTable.java" afterDir="false" />
+    <list default="true" id="e45357d7-81b1-48a1-b20f-656c1f1f2df9" name="Default Changelist" comment="finish all work">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Begin$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Begin$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Begin.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Begin.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/ChessPad.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/ChessPad.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Client/Begin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Client/Begin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Client/ChessPad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Client/ChessPad.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/GoRules.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/GoRules.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/Tool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/Tool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/myStack.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Server/RoomManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Server/RoomManager.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,13 +39,13 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../baduk1" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.runner" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -145,7 +138,9 @@
       <workItem from="1590139238365" duration="9449000" />
       <workItem from="1590197079192" duration="8939000" />
       <workItem from="1590216402506" duration="4187000" />
-      <workItem from="1590240531621" duration="1686000" />
+      <workItem from="1590240531621" duration="3118000" />
+      <workItem from="1590244259132" duration="1613000" />
+      <workItem from="1590246145974" duration="2614000" />
     </task>
     <task id="LOCAL-00001" summary="界面绘制完成，下一步、网络请求">
       <created>1586232165094</created>
@@ -210,7 +205,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590215386554</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="finish all work">
+      <created>1590242504312</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1590242504312</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,23 +242,27 @@
     <MESSAGE value="fix eat points bug&#10;to do ,dajie" />
     <MESSAGE value="Finish All works&#10;Only need to add note" />
     <MESSAGE value=" add note" />
-    <option name="LAST_COMMIT_MESSAGE" value=" add note" />
+    <MESSAGE value="finish all work" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish all work" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/company/baduk/Client/ChessPad.java</url>
+          <url>file://$PROJECT_DIR$/src/com/company/baduk/DataStruct/GoRules.java</url>
           <line>102</line>
-          <option name="timeStamp" value="21" />
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
-        <watch expression="chessHistory.get(i)[j][k]" language="JAVA" />
-        <watch expression="future[j][k]" language="JAVA" />
+        <watch expression="blockLength" language="JAVA" />
+        <watch expression="temp" language="JAVA" />
+        <watch expression="temp[block[0] / 100][block[0] % 100]" language="JAVA" />
+        <watch expression="temp[block[1] / 100][block[1] % 100]" language="JAVA" />
+        <watch expression="block" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>
