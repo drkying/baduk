@@ -7,19 +7,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e45357d7-81b1-48a1-b20f-656c1f1f2df9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/GoRules.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/myStack.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Begin$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Begin$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Begin.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Begin.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/ChessPad.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/ChessPad.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/baduk/com/company/baduk/Client/Point.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Client/Begin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Client/Begin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Client/ChessPad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Client/ChessPad.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Client/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Client/Point.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/GoRules.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/GoRules.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/Tool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/DataStruct/Tool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Server/GameSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Server/GameSocket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/baduk/Server/RoomManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/baduk/Server/RoomManager.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,7 +40,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/com/company/baduk/Client" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../baduk1" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -144,7 +136,8 @@
       <workItem from="1589553391093" duration="301000" />
       <workItem from="1589599933263" duration="4677000" />
       <workItem from="1590112288139" duration="6458000" />
-      <workItem from="1590139238365" duration="9336000" />
+      <workItem from="1590139238365" duration="9449000" />
+      <workItem from="1590197079192" duration="5181000" />
     </task>
     <task id="LOCAL-00001" summary="界面绘制完成，下一步、网络请求">
       <created>1586232165094</created>
@@ -188,7 +181,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589553157653</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="fix eat points bug&#10;to do ,dajie">
+      <created>1590156857745</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1590156857745</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,18 +215,25 @@
     <MESSAGE value="基础功能实现&#10;待实现:&#10; 围棋规则" />
     <MESSAGE value="基础功能实现&#10;fix some bugs&#10;待实现:&#10; 围棋规则" />
     <MESSAGE value="implementation:&#10;   baduk rule:&#10;   eat points&#10;   bug: &#10;   can't prevent the same chess positions" />
-    <option name="LAST_COMMIT_MESSAGE" value="implementation:&#10;   baduk rule:&#10;   eat points&#10;   bug: &#10;   can't prevent the same chess positions" />
+    <MESSAGE value="fix eat points bug&#10;to do ,dajie" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix eat points bug&#10;to do ,dajie" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/company/baduk/DataStruct/GoRules.java</url>
-          <line>83</line>
-          <option name="timeStamp" value="9" />
+          <url>file://$PROJECT_DIR$/src/com/company/baduk/Client/ChessPad.java</url>
+          <line>182</line>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="chessHistory.get(i)[j][k]" language="JAVA" />
+        <watch expression="future[j][k]" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

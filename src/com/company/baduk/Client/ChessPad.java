@@ -54,7 +54,7 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
 
     public void backupBorder() {
         previous = new Point[21][21];
-        cpyBorder(now, previous);
+        previous = Tool.clone(now);
         chessHistory.add(previous);
         chessHash.add(Tool.sumHashCode(previous));
         updateScore();
@@ -82,20 +82,17 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
     }
 
 
-
-    public void removePoint(Point point) {
+    public void removePoint(Point point, Point[][] temp) {
         int x = point.getX(), y = point.getY();
-        remove(now[point.getX()][point.getY()]);
-        now[x][y] = new Point(Player.NONE, x, y);
+        remove(temp[point.getX()][point.getY()]);
+        temp[x][y] = new Point(Player.NONE, x, y);
     }
 
     public void addPoint(Point point) {
-        if (check(point.getX(), point.getY())) {
-            this.add(point);
-            now[point.getX()][point.getY()] = point;
-            goRules.checkDelete(point.getX(), point.getY());
-            backupBorder();
-        }
+        this.add(point);
+        now[point.getX()][point.getY()] = point;
+        goRules.checkDelete(point.getX(), point.getY(), now);
+        backupBorder();
     }
 
     public void addPoint(int x, int y) {
@@ -105,11 +102,7 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
                 JOptionPane.showMessageDialog(null, "此处已经有棋子了！");
                 return;
             }
-            if (!check(a, b)) {
-                JOptionPane.showMessageDialog(null, "当前下棋位置导致重局，请重新下棋");
-                return;
-            }
-            if (x / 20 < 2 || y / 20 < 2 || x / 20 > 19 || y / 20 > 19) {
+            if (x / 20 < 2 || y / 20 < 2 || x / 20 >= 21 || y / 20 >= 21) {
                 JOptionPane.showMessageDialog(null, "不能下在此处！");
                 return;
             } else {
@@ -120,10 +113,25 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
                 } else {
                     return;
                 }
+//                goRules.checkDelete(now[a][b].getX(), now[a][b].getY());
+////
+////                Point[][] future = Tool.clone(now);
+////                if (!check(future)) {
+////                    JOptionPane.showMessageDialog(null, "当前下棋位置导致重局，请重新下棋");
+////                    now[a][b].setPlayer(Player.NONE);
+////                    return;
+////                }
+                Point[][] future = Tool.clone(now);
+                goRules.checkDelete(future[a][b].getX(), future[a][b].getY(), future);
+
+                if (!check(future)) {
+                    JOptionPane.showMessageDialog(null, "当前下棋位置导致重局，请重新下棋");
+                    now[a][b].setPlayer(Player.NONE);
+                    return;
+                }
+                goRules.checkDelete(now[a][b].getX(), now[a][b].getY(), now);
                 this.add(now[a][b]);
                 now[a][b].setBounds(a * 20 - 10, b * 20 - 10, 20, 20);
-                goRules.checkDelete(now[a][b].getX(), now[a][b].getY());
-
                 backupBorder();
                 playerSocket.write(UpdateMessages.ADD_POINT);
                 playerSocket.write(now[a][b]);
@@ -138,7 +146,12 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
     public void updateScore() {
         calcTerritory();
         Begin.score.setText("计分板：" + "黑：" + score_B + " " + "白： " + score_W);
-        System.out.println("now chessPad:");
+
+
+    }
+
+    public void outputChessPad(Point[][] now) {
+        System.out.println("chessPad:");
         for (int i = 2; i <= 20; i++) {
             for (int j = 2; j <= 20; j++) {
                 if (now[i][j].getPlayer() == Player.BLACK)
@@ -152,18 +165,21 @@ public class ChessPad extends JPanel implements MouseListener, ActionListener {
         }
     }
 
-    public boolean check(int x, int y) {
-        now[x][y].setPlayer(nowPlayer);
-        String temp = Tool.sumHashCode(now);
+    public boolean check(Point[][] future) {
+//        now[x][y].setPlayer(nowPlayer);
+        String temp = Tool.sumHashCode(future);
+        System.out.println("hash History:");
+        for (String s : chessHash)
+            System.out.println(s);
+        System.out.println("future hash:" + temp);
         for (int i = 0; i < chessHash.size(); i++) {
             if (chessHash.get(i).equals(temp)) {
                 che:
                 for (int j = 2; j <= 20; j++) {
                     for (int k = 2; k <= 20; k++) {
-                        if (chessHistory.get(i)[j][k] != now[j][k])
+                        if (!chessHistory.get(i)[j][k].equals(future[j][k]))
                             break che;
                         if (j == 20 && k == 20) {
-                            now[x][y].setPlayer(Player.NONE);
                             return false;
                         }
                     }

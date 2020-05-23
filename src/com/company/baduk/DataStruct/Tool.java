@@ -3,6 +3,8 @@ package com.company.baduk.DataStruct;
 import com.company.baduk.Client.ChessPad;
 import com.company.baduk.Client.Point;
 
+import java.io.*;
+
 public class Tool {
     //判断IP是否合法
     public static boolean ipCheck(String text) {
@@ -40,13 +42,34 @@ public class Tool {
             for (int j = 2; j <= 20; j++) {
                 Point point = points[i][j];
                 if (point.getPlayer().equals(Player.BLACK))
-                    hash += (point.getX() * 3 + point.getY() * 5) * 7;
+                    hash += (point.getX() * 3 + point.getY() * 5) * 3;
                 else if (point.getPlayer().equals(Player.WHITE))
-                    hash += (point.getX() * 3 + point.getY() * 5) * 9;
+                    hash += (point.getX() * 3 + point.getY() * 5) * 5;
                 else if (point.getPlayer().equals(Player.NONE))
-                    hash -= (point.getX() * 3 + point.getY() * 5) * 3;
+                    hash--;
             }
         }
         return String.valueOf(hash);
+    }
+
+    public static <T extends Serializable> T clone(T obj) {
+        T cloneObj = null;
+        try {
+            // 写入字节流
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            ObjectOutputStream obs = new ObjectOutputStream(out);
+            obs.writeObject(obj);
+            obs.close();
+
+            // 分配内存，写入原始对象，生成新对象
+            ByteArrayInputStream ios = new ByteArrayInputStream(out.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(ios);
+            // 返回生成的新对象
+            cloneObj = (T) ois.readObject();
+            ois.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cloneObj;
     }
 }
